@@ -2,22 +2,20 @@ package rover
 
 import (
 	"fmt"
-	"mars_rover/rover/direction"
-	"mars_rover/rover/position"
 )
 
 type rover struct {
-	position  position.Position
-	direction direction.Direction
+	position  Position
+	direction Direction
 }
 
 // NewPosition.Position creates and returns new position
-func NewPosition(x, y int) position.Position {
-	return position.Position{X: x, Y: y}
+func NewPosition(x, y int) Position {
+	return Position{X: x, Y: y}
 }
 
 // NewRover creates the rover with given position and direction
-func NewRover(position position.Position, direction direction.Direction) (rover, error) {
+func NewRover(position Position, direction Direction) (rover, error) {
 	if !position.IsValid() {
 		return rover{}, fmt.Errorf("invalid initial position %v", position)
 	}

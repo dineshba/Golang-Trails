@@ -1,21 +1,17 @@
-package direction
-
-import (
-	"mars_rover/rover/position"
-)
+package rover
 
 // Direction represents the rover direction
 type Direction interface {
 	String() string
 	Left() Direction
 	Right() Direction
-	Move(p position.Position) position.Position
+	Move(p Position) Position
 }
 
 type North struct{}
 
-func (North) Move(p position.Position) position.Position {
-	return position.Position{X: p.X, Y: p.Y + 1}
+func (North) Move(p Position) Position {
+	return Position{X: p.X, Y: p.Y + 1}
 }
 
 func (North) Left() Direction {
@@ -31,8 +27,8 @@ func (North) String() string {
 
 type West struct{}
 
-func (West) Move(p position.Position) position.Position {
-	return position.Position{X: p.X - 1, Y: p.Y}
+func (West) Move(p Position) Position {
+	return Position{X: p.X - 1, Y: p.Y}
 }
 
 func (West) String() string {
@@ -49,8 +45,8 @@ func (West) Right() Direction {
 
 type East struct{}
 
-func (East) Move(p position.Position) position.Position {
-	return position.Position{X: p.X + 1, Y: p.Y}
+func (East) Move(p Position) Position {
+	return Position{X: p.X + 1, Y: p.Y}
 }
 
 func (East) String() string {
@@ -67,8 +63,8 @@ func (East) Right() Direction {
 
 type South struct{}
 
-func (South) Move(p position.Position) position.Position {
-	return position.Position{X: p.X, Y: p.Y - 1}
+func (South) Move(p Position) Position {
+	return Position{X: p.X, Y: p.Y - 1}
 }
 
 func (South) String() string {

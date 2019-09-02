@@ -1,4 +1,4 @@
-package position
+package rover
 
 type Position struct {
 	X int
