@@ -24,7 +24,7 @@ func (Right) Action(r rover) rover {
 	return r.right()
 }
 
-func ParseInstructions(instructions string) ([]Instruction, error) {
+func parseInstructions(instructions string) ([]Instruction, error) {
 	var acc []Instruction
 	for _, instruction := range instructions {
 		switch instruction {

@@ -43,17 +43,18 @@ func (r rover) left() rover {
 
 // Act parses and navigates the rover
 func (r rover) Act(instructions string) (rover, error) {
-	parseInstructions, err := ParseInstructions(instructions)
+	parseInstructions, err := parseInstructions(instructions)
 	if err != nil {
 		return rover{}, err
 	}
-	rover := r
+	newRover := r
 	for _, instruction := range parseInstructions {
-		rover = rover.navigate(instruction)
+		newRover = newRover.navigate(instruction)
 	}
-	return rover, nil
+	return newRover, nil
 }
 
+// String implementation for pretty printing
 func (r rover) String() string {
 	return fmt.Sprintf("Postion: %v, Direction: %v", r.position, r.direction)
 }
