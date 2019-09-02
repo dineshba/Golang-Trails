@@ -39,8 +39,7 @@ func NewRover(position position, direction Direction) (rover, error) {
 	return rover{position: position, direction: direction}, nil
 }
 
-// Navigate rover based on given single instruction
-func (r *rover) Navigate(instruction rune) error {
+func (r *rover) navigate(instruction rune) error {
 	switch instruction {
 	case 'M':
 		r.move()
@@ -88,4 +87,15 @@ func (r *rover) left() {
 	} else if r.direction == "S" {
 		r.direction = "E"
 	}
+}
+
+// Act parses and navigates the rover
+func (r *rover) Act(instructions string) error {
+	for _, instruction := range instructions {
+		err := r.navigate(instruction)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

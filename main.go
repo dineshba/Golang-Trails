@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"mars_rover/rover"
-	"os"
 )
 
 func main() {
@@ -13,12 +12,8 @@ func main() {
 		panic(err)
 	}
 	instructions := "MMMRMMLMM"
-	for _, instruction := range instructions {
-		err = newRover.Navigate(instruction)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+	if err = newRover.Act(instructions); err != nil {
+		panic(err)
 	}
 	fmt.Println(newRover)
 }
