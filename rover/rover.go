@@ -3,34 +3,23 @@ package rover
 import (
 	"fmt"
 	"mars_rover/rover/direction"
+	"mars_rover/rover/position"
 )
 
-type position struct {
-	x int
-	y int
-}
-
-func (p position) isValid() bool {
-	return p.x >= 0 && p.y >= 0
-}
-
 type rover struct {
-	position  position
+	position  position.Position
 	direction direction.Direction
 }
 
-// NewPosition creates and returns new position
-func NewPosition(x, y int) position {
-	return position{x: x, y: y}
+// NewPosition.Position creates and returns new position
+func NewPosition(x, y int) position.Position {
+	return position.Position{X: x, Y: y}
 }
 
 // NewRover creates the rover with given position and direction
-func NewRover(position position, direction direction.Direction) (rover, error) {
-	if !position.isValid() {
+func NewRover(position position.Position, direction direction.Direction) (rover, error) {
+	if !position.IsValid() {
 		return rover{}, fmt.Errorf("invalid initial position %v", position)
-	}
-	if !direction.IsValid() {
-		return rover{}, fmt.Errorf("invalid initial direction %s", direction)
 	}
 	return rover{position: position, direction: direction}, nil
 }
@@ -50,39 +39,15 @@ func (r *rover) navigate(instruction rune) error {
 }
 
 func (r *rover) move() {
-	if r.direction == "N" {
-		r.position.y++
-	} else if r.direction == "E" {
-		r.position.x++
-	} else if r.direction == "W" {
-		r.position.x--
-	} else if r.direction == "S" {
-		r.position.y--
-	}
+	r.position = r.direction.Move(r.position)
 }
 
 func (r *rover) right() {
-	if r.direction == "N" {
-		r.direction = "E"
-	} else if r.direction == "E" {
-		r.direction = "S"
-	} else if r.direction == "W" {
-		r.direction = "N"
-	} else if r.direction == "S" {
-		r.direction = "W"
-	}
+	r.direction = r.direction.Right()
 }
 
 func (r *rover) left() {
-	if r.direction == "N" {
-		r.direction = "W"
-	} else if r.direction == "E" {
-		r.direction = "N"
-	} else if r.direction == "W" {
-		r.direction = "S"
-	} else if r.direction == "S" {
-		r.direction = "E"
-	}
+	r.direction = r.direction.Left()
 }
 
 // Act parses and navigates the rover

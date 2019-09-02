@@ -8,7 +8,7 @@ import (
 
 func main() {
 	position := rover.NewPosition(0, 0)
-	newRover, err := rover.NewRover(position, direction.Direction("N"))
+	newRover, err := rover.NewRover(position, direction.North{})
 	if err != nil {
 		panic(err)
 	}
