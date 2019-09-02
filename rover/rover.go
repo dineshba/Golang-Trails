@@ -5,9 +5,17 @@ import "fmt"
 // Direction represents the rover direction
 type Direction string
 
+func (direction Direction) isValid() bool {
+	return direction == "N" || direction == "E" || direction == "W" || direction == "S"
+}
+
 type position struct {
 	x int
 	y int
+}
+
+func (p position) isValid() bool {
+	return p.x >= 0 && p.y >= 0
 }
 
 type rover struct {
@@ -21,8 +29,14 @@ func NewPosition(x, y int) position {
 }
 
 // NewRover creates the rover with given position and direction
-func NewRover(position position, direction Direction) rover {
-	return rover{position: position, direction: direction}
+func NewRover(position position, direction Direction) (rover, error) {
+	if !position.isValid() {
+		return rover{}, fmt.Errorf("invalid initial position %v", position)
+	}
+	if !direction.isValid() {
+		return rover{}, fmt.Errorf("invalid initial direction %s", direction)
+	}
+	return rover{position: position, direction: direction}, nil
 }
 
 // Navigate rover based on given single instruction
