@@ -1,13 +1,9 @@
 package rover
 
-import "fmt"
-
-// Direction represents the rover direction
-type Direction string
-
-func (direction Direction) isValid() bool {
-	return direction == "N" || direction == "E" || direction == "W" || direction == "S"
-}
+import (
+	"fmt"
+	"mars_rover/rover/direction"
+)
 
 type position struct {
 	x int
@@ -20,7 +16,7 @@ func (p position) isValid() bool {
 
 type rover struct {
 	position  position
-	direction Direction
+	direction direction.Direction
 }
 
 // NewPosition creates and returns new position
@@ -29,11 +25,11 @@ func NewPosition(x, y int) position {
 }
 
 // NewRover creates the rover with given position and direction
-func NewRover(position position, direction Direction) (rover, error) {
+func NewRover(position position, direction direction.Direction) (rover, error) {
 	if !position.isValid() {
 		return rover{}, fmt.Errorf("invalid initial position %v", position)
 	}
-	if !direction.isValid() {
+	if !direction.IsValid() {
 		return rover{}, fmt.Errorf("invalid initial direction %s", direction)
 	}
 	return rover{position: position, direction: direction}, nil

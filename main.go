@@ -3,11 +3,12 @@ package main
 import (
 	"fmt"
 	"mars_rover/rover"
+	"mars_rover/rover/direction"
 )
 
 func main() {
 	position := rover.NewPosition(0, 0)
-	newRover, err := rover.NewRover(position, rover.Direction("N"))
+	newRover, err := rover.NewRover(position, direction.Direction("N"))
 	if err != nil {
 		panic(err)
 	}
