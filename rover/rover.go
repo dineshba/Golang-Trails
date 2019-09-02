@@ -22,16 +22,14 @@ func NewRover(position Position, direction Direction) (rover, error) {
 	return rover{position: position, direction: direction}, nil
 }
 
-func (r *rover) navigate(instruction rune) error {
+func (r *rover) navigate(instruction Instruction) error {
 	switch instruction {
-	case 'M':
+	case Move:
 		r.move()
-	case 'L':
+	case Left:
 		r.left()
-	case 'R':
+	case Right:
 		r.right()
-	default:
-		return fmt.Errorf("Not a valid instruction %c", instruction)
 	}
 	return nil
 }
@@ -50,7 +48,11 @@ func (r *rover) left() {
 
 // Act parses and navigates the rover
 func (r *rover) Act(instructions string) error {
-	for _, instruction := range instructions {
+	parseInstructions, err := ParseInstructions(instructions)
+	if err != nil {
+		return err
+	}
+	for _, instruction := range parseInstructions {
 		err := r.navigate(instruction)
 		if err != nil {
 			return err
