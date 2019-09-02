@@ -22,36 +22,36 @@ func NewRover(position Position, direction Direction) (rover, error) {
 	return rover{position: position, direction: direction}, nil
 }
 
-func (r *rover) navigate(instruction Instruction) error {
-	instruction.Action(r)
-	return nil
+func (r rover) navigate(instruction Instruction) rover {
+	return instruction.Action(r)
 }
 
-func (r *rover) move() {
+func (r rover) move() rover {
 	r.position = r.direction.Move(r.position)
+	return r
 }
 
-func (r *rover) right() {
+func (r rover) right() rover {
 	r.direction = r.direction.Right()
+	return r
 }
 
-func (r *rover) left() {
+func (r rover) left() rover {
 	r.direction = r.direction.Left()
+	return r
 }
 
 // Act parses and navigates the rover
-func (r *rover) Act(instructions string) error {
+func (r rover) Act(instructions string) (rover, error) {
 	parseInstructions, err := ParseInstructions(instructions)
 	if err != nil {
-		return err
+		return rover{}, err
 	}
+	rover := r
 	for _, instruction := range parseInstructions {
-		err := r.navigate(instruction)
-		if err != nil {
-			return err
-		}
+		rover = rover.navigate(instruction)
 	}
-	return nil
+	return rover, nil
 }
 
 func (r rover) String() string {

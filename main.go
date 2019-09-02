@@ -12,7 +12,8 @@ func main() {
 		panic(err)
 	}
 	instructions := "MMMRMMLMM"
-	if err = newRover.Act(instructions); err != nil {
+	newRover, err = newRover.Act(instructions)
+	if  err != nil {
 		panic(err)
 	}
 	fmt.Println(newRover)

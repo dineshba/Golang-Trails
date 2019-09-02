@@ -3,25 +3,25 @@ package rover
 import "fmt"
 
 type Instruction interface {
-	Action(r *rover)
+	Action(r rover) rover
 }
 
 type Move struct{}
 
-func (Move) Action(r *rover) {
-	r.move()
+func (Move) Action(r rover) rover {
+	return r.move()
 }
 
 type Left struct{}
 
-func (Left) Action(r *rover) {
-	r.left()
+func (Left) Action(r rover) rover {
+	return r.left()
 }
 
 type Right struct{}
 
-func (Right) Action(r *rover) {
-	r.right()
+func (Right) Action(r rover) rover {
+	return r.right()
 }
 
 func ParseInstructions(instructions string) ([]Instruction, error) {
