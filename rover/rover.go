@@ -58,3 +58,7 @@ func (r *rover) Act(instructions string) error {
 	}
 	return nil
 }
+
+func (r rover) String() string {
+	return fmt.Sprintf("Postion: %v, Direction: %v", r.position, r.direction)
+}
