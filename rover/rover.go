@@ -23,14 +23,7 @@ func NewRover(position Position, direction Direction) (rover, error) {
 }
 
 func (r *rover) navigate(instruction Instruction) error {
-	switch instruction {
-	case Move:
-		r.move()
-	case Left:
-		r.left()
-	case Right:
-		r.right()
-	}
+	instruction.Action(r)
 	return nil
 }
 
